@@ -1,0 +1,2 @@
+# openclover-sandbox
+open clover
