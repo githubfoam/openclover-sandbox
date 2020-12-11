@@ -1,2 +1,8 @@
 # openclover-sandbox
-open clover
+
+~~~~
+
+http://openclover.org/
+https://github.com/openclover/clover
+
+~~~~
