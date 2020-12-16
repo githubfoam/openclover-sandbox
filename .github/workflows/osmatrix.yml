@@ -42,4 +42,10 @@ jobs:
     - name: "Run a one-line script"
       run: echo Hello, world!
     - name: "check on brew version"
-      run: brew --version      
+      run: |
+        brew --version   #Homebrew 2.5.12   
+        brew doctor #Check brew for potential problems
+        brew cask list #List all installed casks
+        brew list #List all the installed formulas
+        brew update
+        brew upgrade
