@@ -39,9 +39,10 @@ jobs:
           run:  |
             echo "=============================deploy gradle w clover============================================================="
             java -version
-            gradle -v
-            cd app6 && chmod +x gradlew
-            gradle clean test cloverGenerateReport
+            cd maven-pipeline/app4
+            #http://openclover.org/doc/manual/latest/maven--quick-start-guide.html
+            mvn clover:setup #initialize Clover and instrument sources
+            mvn test #compile code, run tests and record code coverage
 
   windows:
     runs-on: windows-latest
