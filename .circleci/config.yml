@@ -1,0 +1,120 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@0.2.1
+
+jobs:
+  
+  build-virtualenv:
+    executor: python/default
+    steps:
+      - checkout
+      - python/load-cache
+      - python/install-deps
+      - python/save-cache
+      - run:
+          name: Create virtualenv
+          command: |
+            python -V
+            python3 -V
+            pip3 --version
+            pip3 install virtualenv
+            virtualenv -p $(which python3) ~venvpy3
+            source ~venvpy3/bin/activate
+            pip install -r requirements.txt
+  
+  build-gradle-clover:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo         
+    steps:
+      - setup_remote_docker        
+      - run:
+          name: "OS fingerprinting - Debian GNU/Linux 10 (buster) x86_64"
+          command: |
+            uname -a
+            cat /etc/issue
+            cat /etc/os-release
+      - checkout
+      - run:
+          name: "build gradle w clover  on Debian GNU/Linux 10 (buster) x86_64"
+          command: |
+            echo "=============================deploy gradle w clover============================================================="
+            java -version
+            gradle -v
+            cd app6 && chmod +x gradlew
+            gradle clean test cloverGenerateReport
+
+  build-maven-openclover:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo         
+    steps:
+      - setup_remote_docker        
+      - run:
+          name: "OS fingerprinting - Debian GNU/Linux 10 (buster) x86_64"
+          command: |
+            uname -a
+            cat /etc/issue
+            cat /etc/os-release
+      - checkout
+      - run:
+          name: "build maven w openclover  on Debian GNU/Linux 10 (buster) x86_64"
+          command: |
+            echo "=============================deploy maven w openclover============================================================="
+            java -version
+            # maven -v #maven: command not found 
+            # cd maven-pipeline/app4
+            # # mvn clean clover:setup test clover:aggregate clover:clover
+            # #http://openclover.org/doc/manual/latest/maven--quick-start-guide.html
+            # mvn clean #ensure that all sources will be recompiled (Clover uses source-code instrumentation) 
+            # mvn clover:setup #initialize Clover and instrument sources
+            # mvn test #compile code, run tests and record code coverage
+            # mvn clover:aggregate #merge coverage data from a multi-module project
+            # mvn clover:clover #generate HTML report for a project,find a report in target/site/clover directory. 
+      - run:
+          name: "mvn clean #ensure that all sources will be recompiled (Clover uses source-code instrumentation) "
+          command: |
+            echo "=============================mvn clean============================================================="
+            java -version
+            cd maven-pipeline/app4
+            #http://openclover.org/doc/manual/latest/maven--quick-start-guide.html
+            mvn clean #ensure that all sources will be recompiled (Clover uses source-code instrumentation) 
+      - run:
+          name: "mvn clover - setup #initialize Clover and instrument sources"
+          command: |
+            echo "=============================mvn clover============================================================="
+            java -version
+            cd maven-pipeline/app4
+            #http://openclover.org/doc/manual/latest/maven--quick-start-guide.html
+            mvn clover:setup #initialize Clover and instrument sources
+      - run:
+          name: "mvn test - compile code, run tests and record code coverage"
+          command: |
+            echo "=============================mvn test============================================================="
+            java -version
+            cd maven-pipeline/app4
+            # #http://openclover.org/doc/manual/latest/maven--quick-start-guide.html
+            mvn test #compile code, run tests and record code coverage
+
+workflows:
+  version: 2
+  commit-parallel-workflow:
+    jobs:
+      # - build-virtualenv
+      # - build-gradle
+      - build-gradle-clover
+      - build-maven-openclover      
+      
+  # scheduled-workflow:
+  #   triggers:
+  #     - schedule:        
+  #         cron: "0 0 1 * *" # execute in the first minute of the month
+  #         filters:
+  #           branches:
+  #             only: 
+  #             - feature_circleci
+  #   jobs:
+  #     - build-virtualenv
+  #     - build-gradle
+  #     - build-gradle-clover
