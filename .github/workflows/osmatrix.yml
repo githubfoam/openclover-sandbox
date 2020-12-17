@@ -26,7 +26,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: "os fingerprinting"
-        run: hostnamectl status 
+        run: hostnamectl status
+      - name: "build gradle w clover  on ubuntu 20.04 x86_64"
+        run:  |
+            echo "=============================deploy maven w openclover============================================================="
+            java -version
+            cd app4
+            #http://openclover.org/doc/manual/latest/maven--quick-start-guide.html
+            mvn clover:setup #initialize Clover and instrument sources
+            # mvn test #compile code, run tests and record code coverage       
 
   ubuntu-1804:
         runs-on: ubuntu-18.04
@@ -37,7 +45,7 @@ jobs:
           run: hostnamectl status 
         - name: "build gradle w clover  on ubuntu 18.04 x86_64"
           run:  |
-            echo "=============================deploy gradle w clover============================================================="
+            echo "=============================deploy maven w openclover============================================================="
             java -version
             cd app4
             #http://openclover.org/doc/manual/latest/maven--quick-start-guide.html
