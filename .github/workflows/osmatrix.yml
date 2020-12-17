@@ -5,11 +5,9 @@ name: osmatrix
 
 on:
   push:
-    branches: [ test ]
+    branches: [ dev ]
   pull_request:
-    branches: [ test ]
-  # schedule: 
-  #   - cron:  '*/15 * * * *'
+    branches: [ dev ]
 
 
 jobs:
@@ -27,8 +25,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v1
-    - name: "Run a one-line script"
-      run: echo Hello, world!
     - name: "check if server is virtual"
       run: Systeminfo | findstr /i model   
     - name: "check the PROCESSOR_ARCHITECTURE environment variable.64-bit systems will say AMD64 and 32-bit systems should say x86"
@@ -39,8 +35,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v1
-    - name: "Run a one-line script"
-      run: echo Hello, world!
     - name: "check on brew version"
       run: |
         brew --version   #Homebrew 2.5.12   
@@ -56,6 +50,6 @@ jobs:
     - name: "brew upgrade"
       run: |
         brew upgrade          
-    - name: "brew doctor"
-      run: |
-        brew doctor #Check brew for potential problems         
+    # - name: "brew doctor"
+    #   run: |
+    #     brew doctor #Check brew for potential problems         
