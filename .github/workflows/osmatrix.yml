@@ -39,7 +39,7 @@ jobs:
           run:  |
             echo "=============================deploy gradle w clover============================================================="
             java -version
-            cd maven-pipeline/app4
+            cd app4
             #http://openclover.org/doc/manual/latest/maven--quick-start-guide.html
             mvn clover:setup #initialize Clover and instrument sources
             mvn test #compile code, run tests and record code coverage
