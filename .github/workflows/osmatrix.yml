@@ -44,7 +44,7 @@ jobs:
     - name: "check on brew version"
       run: |
         brew --version   #Homebrew 2.5.12   
-        brew doctor #Check brew for potential problems
+        #brew doctor #Check brew for potential problems
         brew cask list #List all installed casks
         brew list #List all the installed formulas
         brew update
