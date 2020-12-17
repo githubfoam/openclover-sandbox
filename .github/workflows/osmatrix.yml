@@ -20,6 +20,22 @@ jobs:
     - name: "os fingerprinting"
       run: hostnamectl status
 
+  ubuntu-2004:
+      runs-on: ubuntu-20.04
+      steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: "os fingerprinting"
+        run: hostnamectl status 
+
+  ubuntu-1804:
+        runs-on: ubuntu-18.04
+        steps:
+        - name: Checkout
+          uses: actions/checkout@v1
+        - name: "os fingerprinting"
+          run: hostnamectl status 
+          
   windows:
     runs-on: windows-latest
     steps:
