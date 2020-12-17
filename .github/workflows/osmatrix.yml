@@ -8,8 +8,8 @@ on:
     branches: [ test ]
   pull_request:
     branches: [ test ]
-  schedule:
-    - cron:  '*/15 * * * *'
+  # schedule: 
+  #   - cron:  '*/15 * * * *'
 
 
 jobs:
@@ -44,8 +44,18 @@ jobs:
     - name: "check on brew version"
       run: |
         brew --version   #Homebrew 2.5.12   
-        #brew doctor #Check brew for potential problems
-        brew cask list #List all installed casks
+    - name: "brew cask list"
+      run: |
+        brew list --cask #Warning: Calling brew cask list is deprecated! Use brew list [--cask] instead.
+    - name: "brew list"
+      run: |
         brew list #List all the installed formulas
-        brew update
-        brew upgrade
+    - name: "brew update"
+      run: |
+        brew update      
+    - name: "brew upgrade"
+      run: |
+        brew upgrade          
+    - name: "brew doctor"
+      run: |
+        brew doctor #Check brew for potential problems         
