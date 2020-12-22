@@ -1,6 +1,6 @@
 
 
-name: osmatrix
+name: "OWASP ZAP Full Scan workflow"
 
 
 on:
