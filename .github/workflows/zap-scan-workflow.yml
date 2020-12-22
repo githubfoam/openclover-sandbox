@@ -15,6 +15,7 @@ jobs:
 
 # https://github.com/marketplace/actions/owasp-zap-baseline-scan
   linux-zap-scan-job:
+    name: "OWASP ZAP Full Scan workflow"
     runs-on: ubuntu-latest #Ubuntu 18.04.5 LTS
     steps:
     # - name: Checkout
